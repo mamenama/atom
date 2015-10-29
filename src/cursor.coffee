@@ -607,9 +607,10 @@ class Cursor extends Model
     includeNonWordCharacters ?= true
     nonWordCharacters = @config.get('editor.nonWordCharacters', scope: @getScopeDescriptor())
     segments = ["^[\t ]*$"]
-    segments.push("[^\\s#{_.escapeRegExp(nonWordCharacters)}]+")
     if includeNonWordCharacters
       segments.push("[#{_.escapeRegExp(nonWordCharacters)}]+")
+    else
+      segments.push("[^\\s]+")
     new RegExp(segments.join("|"), "g")
 
   # Public: Get the RegExp used by the cursor to determine what a "subword" is.
